@@ -3,18 +3,18 @@ node {
         // Checkout source code from GitHub
         checkout([$class: 'GitSCM',
                   branches: [[name: '*/main']],
-                  userRemoteConfigs: [[url: 'https://github.com/snaatak-deepak/AMI.git']]
+                  userRemoteConfigs: [[url: 'https://github.com/snaatak-deepak/Scripted-Pipeline-AMI.git']]
         ])
     }
 
     stage('Validate Packer Template') {
-        sh 'packer validate ami.pkr.hcl'
+        sh 'packer validate template.json'
     }
 
     stage('Build AMI') {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
-                          credentialsId: 'aws-credentials']]) {
-            sh 'packer build ami.pkr.hcl'
+                          credentialsId: 'aws-cred']]) {
+            sh 'packer build template.json'
         }
     }
 }
