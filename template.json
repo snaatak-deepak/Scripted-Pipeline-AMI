@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "aws_region": "ap-south-1"
+  },
   "builders": [
     {
       "type": "amazon-ebs",
